@@ -1,7 +1,6 @@
 // 15-745 S18 Assignment 2: available.cpp
 // Group:
 ////////////////////////////////////////////////////////////////////////////////
-
 #include "llvm/IR/Function.h"
 #include "llvm/Pass.h"
 #include "llvm/IR/Constants.h"
@@ -74,12 +73,5 @@ namespace {
         }
         return state[block]->output;
     }
-
-
-
-
-
-
-
 
 }
