@@ -43,11 +43,13 @@ class iterative_model{
         bool fwd;
         Function* func;
         std::map<BasicBlock*,block_info*> state;
-        BitVector* (*transfer_function)(BasicBlock*); 
-        BitVector* (*meet)(BasicBlock*);
+        BitVector* (*transfer_function)(BasicBlock*, std::map<BasicBlock*,block_info*>&); 
+        BitVector* (*meet)(BasicBlock*,std::map<BasicBlock*,block_info*>&);
+
 
     public:
-        bool run_flow(bool direction, Function &p, BitVector* (*mt)(BasicBlock*) ,  BitVector* (*trns)(BasicBlock*));
+        iterative_model(bool direction, Function &p, BitVector* (*mt)(BasicBlock*,std::map<BasicBlock*,block_info*>&) ,  BitVector* (*trns)(BasicBlock*,std::map<BasicBlock*,block_info*>&),int number);
+	BitVector* run_analyze();
 
 };
 
