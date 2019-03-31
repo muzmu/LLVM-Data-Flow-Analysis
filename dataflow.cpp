@@ -5,28 +5,21 @@
 #include "dataflow.h"
 
 namespace llvm {
-
-  // Add code for your dataflow abstraction here.
-
-iterative_model:: iterative_model(bool direction, Function &p, BitVector* (*mt)(BasicBlock*, std::map<BasicBlock*, block_info*>&) , BitVector* (*trns)(BasicBlock*,std::map<BasicBlock*, block_info*>&),int number){
-	fwd=direction;
-	func=&p;
-//	transfer_function=&trns;
-//	meet=&mt;
-for (Function::iterator FI = func->begin(), FE = func->end(); FI != FE; ++FI) { 
-	BasicBlock* block=&*FI;
-	block_info* info=new block_info(number);
-	state[block]=info;	
-	} 
+   iterative_model::iterative_model(bool direction, Function &p, BitVector* (*mt)(BasicBlock*, std::map<BasicBlock*, block_info*>&) ,  BitVector* (*trns)(BasicBlock*,std::map<BasicBlock*, block_info*>&),int number){
+    fwd = direction;
+    func = &p;
+    meet = mt;
+    transfer_function = trns;
+       for(Function::iterator FI=func->begin(), FE=func->end(); FI!=FE; ++FI){
+            BasicBlock* block = &*FI;
+            block_info* info = new block_info(number);
+            state[block] = info;
+        }
+    }
 
 
-
-}
-
-
-
-BitVector* iterative_model:: run_analyze(){
-bool converged = false;
+BitVector* iterative_model::run_analysis(){
+    bool converged = false;
     if(fwd){
         BasicBlock* starting_point=&*func->begin();
         BitVector* out2;
@@ -49,10 +42,9 @@ bool converged = false;
         BitVector* toreturn = new BitVector(1);
         return toreturn;
    }
-
-
-
+    // Add code for your dataflow abstraction here.
 }
+
 
 
 
