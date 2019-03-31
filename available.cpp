@@ -18,20 +18,17 @@ namespace {
 
   BitVector* meet(BasicBlock* block,std::map<BasicBlock*,block_info*>& state)
   {	std::vector<BitVector*>inputs;	
-	std::BitVector* finalBitVector;
+	BitVector* finalBitVector;
 	for (auto pred_block =pred_begin(block),et=pred_end(block);pred_block!=et;++pred_block)
 	{
-		inputs.push_back(state[pred_block]->output);	
-	
+		inputs.push_back(state[*pred_block]->input);		
 	}
 	if (inputs.size()==0){
-	return finalBitVector;		
-	}
-	
-	finalBitVector=inputs[0];//intiliazing bit vector
-	
-	for (int i=0;i<inputs.size();i++){
-	finalBitVector&=inputs[i];	
+	return state[block]->input;		
+	}	
+	finalBitVector=inputs[0];	
+	for (std::size_t i=0,max=inputs.size();i!=max;++i){
+	*(finalBitVector)&=*(inputs[i]);	
 	}
 	return finalBitVector;
 
